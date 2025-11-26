@@ -14,6 +14,8 @@ export default function RODetails({ ro, initialParts }: { ro: RO; initialParts: 
     const [editQty, setEditQty] = useState<number>(0);
     const [error, setError] = useState("");
     const [pendingScans, setPendingScans] = useState<string[]>([]);
+    const [showManualInput, setShowManualInput] = useState(false);
+    const [manualBarcode, setManualBarcode] = useState("");
     const router = useRouter();
 
     // Load pending scans from local storage on mount
@@ -31,6 +33,8 @@ export default function RODetails({ ro, initialParts }: { ro: RO; initialParts: 
 
     const handleScan = async (barcode: string) => {
         setIsScanning(false);
+        setManualBarcode(""); // Clear manual input on success
+        setShowManualInput(false);
 
         startTransition(async () => {
             try {
@@ -47,6 +51,12 @@ export default function RODetails({ ro, initialParts }: { ro: RO; initialParts: 
                 setError("Offline: Scan saved locally. Sync when online.");
             }
         });
+    };
+
+    const handleManualSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!manualBarcode.trim()) return;
+        handleScan(manualBarcode.trim().toUpperCase());
     };
 
     const handleSync = async () => {
@@ -121,7 +131,7 @@ export default function RODetails({ ro, initialParts }: { ro: RO; initialParts: 
     const isFinalized = ro.status === "finalized";
 
     return (
-        <div className="container-mobile space-y-6 pb-20">
+        <div className="container-mobile space-y-6 pb-24">
             <header className="flex justify-between items-start">
                 <div>
                     <h1 className="text-3xl font-bold font-mono">{ro.ro_number}</h1>
@@ -158,14 +168,43 @@ export default function RODetails({ ro, initialParts }: { ro: RO; initialParts: 
                 </div>
             )}
 
-            {/* Scanner */}
+            {/* Scanner & Manual Entry */}
             {!isFinalized && (
-                <section>
+                <section className="space-y-4">
                     <Scanner
                         onScan={handleScan}
                         isScanning={isScanning}
                         setIsScanning={setIsScanning}
                     />
+
+                    <div className="flex justify-center">
+                        <button
+                            onClick={() => setShowManualInput(!showManualInput)}
+                            className="text-sm text-blue-600 font-medium underline"
+                        >
+                            {showManualInput ? "Hide Manual Entry" : "Enter Barcode Manually"}
+                        </button>
+                    </div>
+
+                    {showManualInput && (
+                        <form onSubmit={handleManualSubmit} className="flex gap-2">
+                            <input
+                                type="text"
+                                placeholder="Enter Part Number / Barcode"
+                                className="input uppercase flex-1"
+                                value={manualBarcode}
+                                onChange={(e) => setManualBarcode(e.target.value)}
+                                autoFocus
+                            />
+                            <button
+                                type="submit"
+                                disabled={!manualBarcode.trim() || isPending}
+                                className="btn btn-primary"
+                            >
+                                Add
+                            </button>
+                        </form>
+                    )}
                 </section>
             )}
 
@@ -235,13 +274,13 @@ export default function RODetails({ ro, initialParts }: { ro: RO; initialParts: 
                 </div>
             </section>
 
-            {/* Finalize Button */}
-            {!isFinalized && parts.length > 0 && (
-                <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200 dark:bg-gray-900 dark:border-gray-800">
+            {/* Finalize Button - Always visible but disabled if empty */}
+            {!isFinalized && (
+                <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200 dark:bg-gray-900 dark:border-gray-800 z-50">
                     <button
                         onClick={handleFinalize}
-                        disabled={isPending}
-                        className="btn btn-primary w-full bg-green-600 hover:bg-green-700 flex justify-center items-center gap-2"
+                        disabled={isPending || parts.length === 0}
+                        className="btn btn-primary w-full bg-green-600 hover:bg-green-700 flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {isPending ? <Loader2 className="animate-spin" /> : <Check className="w-5 h-5" />}
                         Finalize RO
