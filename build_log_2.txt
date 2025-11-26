@@ -1,0 +1,36 @@
+
+> auto-parts-tracker@0.1.0 build
+> next build --webpack
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /home/malay/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/package-lock.json
+
+   ▲ Next.js 16.0.4 (webpack)
+
+   Creating an optimized production build ...
+> [PWA] Compile server
+> [PWA] Compile server
+> [PWA] Compile client (static)
+> [PWA] Auto register service worker with: /home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next-pwa/register.js
+> [PWA] Service worker: /home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/public/sw.js
+> [PWA]   url: /sw.js
+> [PWA]   scope: /
+ ✓ Compiled successfully in 15.4s
+   Running TypeScript ...
+Failed to compile.
+
+./next.config.ts:2:21
+Type error: Could not find a declaration file for module 'next-pwa'. '/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next-pwa/index.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/next-pwa` if it exists or add a new declaration (.d.ts) file containing `declare module 'next-pwa';`
+
+[0m [90m 1 |[39m [36mimport[39m type { [33mNextConfig[39m } [36mfrom[39m [32m"next"[39m[33m;[39m
+[31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m withPWA [36mfrom[39m [32m"next-pwa"[39m[33m;[39m
+ [90m   |[39m                     [31m[1m^[22m[39m
+ [90m 3 |[39m
+ [90m 4 |[39m [36mconst[39m config[33m:[39m [33mNextConfig[39m [33m=[39m {
+ [90m 5 |[39m   [90m/* config options here */[39m[0m
+Next.js build worker exited with code: 1 and signal: null

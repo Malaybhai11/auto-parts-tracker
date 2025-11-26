@@ -1,0 +1,39 @@
+
+> auto-parts-tracker@0.1.0 build
+> next build --webpack
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /home/malay/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/package-lock.json
+
+   ▲ Next.js 16.0.4 (webpack)
+
+   Creating an optimized production build ...
+> [PWA] Compile server
+> [PWA] Compile server
+> [PWA] Compile client (static)
+> [PWA] Auto register service worker with: /home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next-pwa/register.js
+> [PWA] Service worker: /home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/public/sw.js
+> [PWA]   url: /sw.js
+> [PWA]   scope: /
+ ✓ Compiled successfully in 14.2s
+   Running TypeScript ...
+   Collecting page data using 3 workers ...
+   Generating static pages using 3 workers (0/3) ...
+ ✓ Generating static pages using 3 workers (3/3) in 2.8s
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ƒ /finals
+└ ƒ /ro/[ro_number]
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

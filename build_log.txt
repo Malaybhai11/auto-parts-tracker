@@ -1,0 +1,79 @@
+
+> auto-parts-tracker@0.1.0 build
+> next build --webpack
+
+ ⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /home/malay/package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * /home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/package-lock.json
+
+   ▲ Next.js 16.0.4 (webpack)
+
+   Creating an optimized production build ...
+> [PWA] Compile server
+> [PWA] Compile server
+> [PWA] Compile client (static)
+> [PWA] Auto register service worker with: /home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next-pwa/register.js
+> [PWA] Service worker: /home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/public/sw.js
+> [PWA]   url: /sw.js
+> [PWA]   scope: /
+Error: Cannot apply unknown utility class `max-w-md`. Are you using CSS modules or similar and missing `@reference`? https://tailwindcss.com/docs/functions-and-directives#reference-directive
+    at ignore-listed frames
+<w> [webpack.cache.PackFileCacheStrategy] Skipped not serializable cache item 'Compilation/modules|/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[15].oneOf[10].use[2]!/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[15].oneOf[10].use[3]!/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/app/globals.css': No serializer registered for PostCSSSyntaxError
+<w> while serializing webpack/lib/cache/PackFileCacheStrategy.PackContentItems -> webpack/lib/NormalModule -> webpack/lib/ModuleBuildError -> PostCSSSyntaxError
+Failed to compile.
+
+./app/globals.css:1:1
+Syntax error: tailwindcss: /home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/app/globals.css Cannot apply unknown utility class `max-w-md`. Are you using CSS modules or similar and missing `@reference`? https://tailwindcss.com/docs/functions-and-directives#reference-directive
+
+> 1 | @tailwind base;
+    | ^
+  2 | @tailwind components;
+  3 | @tailwind utilities;
+
+./app/globals.css
+Syntax error: tailwindcss: /home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/app/globals.css Cannot apply unknown utility class `max-w-md`. Are you using CSS modules or similar and missing `@reference`? https://tailwindcss.com/docs/functions-and-directives#reference-directive (1:1)
+
+[1m[31m>[39m[22m[90m 1 | [39m[36m@tailwind[39m base[33m;[39m
+ [90m   | [39m[1m[31m^[39m[22m
+ [90m 2 | [39m[36m@tailwind[39m components[33m;[39m
+ [90m 3 | [39m[36m@tailwind[39m utilities[33m;[39m
+
+    at tryRunOrWebpackError (/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/compiled/webpack/bundle5.js:29:316134)
+    at __webpack_require_module__ (/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/compiled/webpack/bundle5.js:29:131536)
+    at __nested_webpack_require_161494__ (/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/compiled/webpack/bundle5.js:29:130971)
+    at /home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/compiled/webpack/bundle5.js:29:131828
+    at symbolIterator (/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/compiled/neo-async/async.js:1:14444)
+    at done (/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/compiled/neo-async/async.js:1:14824)
+    at Hook.eval [as callAsync] (eval at create (/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/compiled/webpack/bundle5.js:14:9224), <anonymous>:15:1)
+    at Hook.CALL_ASYNC_DELEGATE [as _callAsync] (/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/compiled/webpack/bundle5.js:14:6378)
+    at /home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/compiled/webpack/bundle5.js:29:130691
+    at symbolIterator (/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/compiled/neo-async/async.js:1:14402)
+-- inner error --
+Syntax error: tailwindcss: /home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/app/globals.css Cannot apply unknown utility class `max-w-md`. Are you using CSS modules or similar and missing `@reference`? https://tailwindcss.com/docs/functions-and-directives#reference-directive (1:1)
+
+[1m[31m>[39m[22m[90m 1 | [39m[36m@tailwind[39m base[33m;[39m
+ [90m   | [39m[1m[31m^[39m[22m
+ [90m 2 | [39m[36m@tailwind[39m components[33m;[39m
+ [90m 3 | [39m[36m@tailwind[39m utilities[33m;[39m
+
+    at Object.<anonymous> (/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[15].oneOf[10].use[2]!/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[15].oneOf[10].use[3]!/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/app/globals.css:1:7)
+    at /home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/compiled/webpack/bundle5.js:29:962757
+    at Hook.eval [as call] (eval at create (/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/compiled/webpack/bundle5.js:14:9002), <anonymous>:7:1)
+    at Hook.CALL_DELEGATE [as _call] (/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/compiled/webpack/bundle5.js:14:6272)
+    at /home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/compiled/webpack/bundle5.js:29:131569
+    at tryRunOrWebpackError (/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/compiled/webpack/bundle5.js:29:316088)
+    at __webpack_require_module__ (/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/compiled/webpack/bundle5.js:29:131536)
+    at __nested_webpack_require_161494__ (/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/compiled/webpack/bundle5.js:29:130971)
+    at /home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/compiled/webpack/bundle5.js:29:131828
+    at symbolIterator (/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/compiled/neo-async/async.js:1:14444)
+
+Generated code for /home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[15].oneOf[10].use[2]!/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[15].oneOf[10].use[3]!/home/malay/Data/Data/Monetized/Automation-DPOS/auto-parts-tracker/app/globals.css
+
+Import trace for requested module:
+./app/globals.css
+
+
+> Build failed because of webpack errors
