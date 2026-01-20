@@ -1,18 +1,34 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { createRO, searchRO, RO } from "@/actions/ro-actions";
+import { useState, useEffect } from "react";
+import { createRO, searchRO, getRecentROs, RO } from "@/utils/db";
 import { useRouter } from "next/navigation";
 import { Loader2, Plus, Search, FileText, CheckCircle } from "lucide-react";
 import Link from "next/link";
 
-export default function Dashboard({ recentROs }: { recentROs: RO[] }) {
+export default function Dashboard() {
     const [roNumber, setRoNumber] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
+    const [recentROs, setRecentROs] = useState<RO[]>([]);
     const [searchResults, setSearchResults] = useState<RO[]>([]);
-    const [isPending, startTransition] = useTransition();
+    const [isLoading, setIsLoading] = useState(true);
+    const [isCreating, setIsCreating] = useState(false);
     const [error, setError] = useState("");
     const router = useRouter();
+
+    // Fetch initial data
+    useEffect(() => {
+        loadRecentROs();
+    }, []);
+
+    const loadRecentROs = async () => {
+        setIsLoading(true);
+        const res = await getRecentROs();
+        if (res.success && res.data) {
+            setRecentROs(res.data);
+        }
+        setIsLoading(false);
+    };
 
     const handleCreate = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -20,14 +36,14 @@ export default function Dashboard({ recentROs }: { recentROs: RO[] }) {
 
         if (!roNumber.trim()) return;
 
-        startTransition(async () => {
-            const res = await createRO(roNumber);
-            if (res.error) {
-                setError(res.error);
-            } else if (res.data) {
-                router.push(`/ro/${res.data.ro_number}`);
-            }
-        });
+        setIsCreating(true);
+        const res = await createRO(roNumber);
+        if (res.error) {
+            setError(res.error);
+            setIsCreating(false);
+        } else if (res.data) {
+            router.push(`/ro/${res.data.ro_number}`);
+        }
     };
 
     const handleSearch = async (query: string) => {
@@ -43,11 +59,13 @@ export default function Dashboard({ recentROs }: { recentROs: RO[] }) {
         }
     };
 
+    const displayROs = searchQuery ? searchResults : recentROs;
+
     return (
         <div className="container-mobile space-y-8">
             <header className="flex justify-between items-center">
-                <h1 className="text-2xl font-bold">Parts Tracker</h1>
-                <Link href="/finals" className="text-blue-600 font-medium">
+                <h1 className="text-2xl font-bold">Parts Tracker (Local)</h1>
+                <Link href="/finals" className="text-blue-600 font-medium opacity-50 cursor-not-allowed" title="Not available in local mode yet">
                     Finals
                 </Link>
             </header>
@@ -64,15 +82,15 @@ export default function Dashboard({ recentROs }: { recentROs: RO[] }) {
                         className="input uppercase"
                         value={roNumber}
                         onChange={(e) => setRoNumber(e.target.value)}
-                        disabled={isPending}
+                        disabled={isCreating}
                     />
                     {error && <p className="text-red-500 text-sm">{error}</p>}
                     <button
                         type="submit"
-                        disabled={isPending || !roNumber.trim()}
+                        disabled={isCreating || !roNumber.trim()}
                         className="btn btn-primary w-full flex justify-center items-center gap-2"
                     >
-                        {isPending ? <Loader2 className="animate-spin" /> : "Start RO"}
+                        {isCreating ? <Loader2 className="animate-spin" /> : "Start RO"}
                     </button>
                 </form>
             </section>
@@ -96,37 +114,41 @@ export default function Dashboard({ recentROs }: { recentROs: RO[] }) {
                         {searchQuery ? "Search Results" : "Recent ROs"}
                     </h3>
 
-                    <div className="space-y-2">
-                        {(searchQuery ? searchResults : recentROs).map((ro) => (
-                            <Link
-                                key={ro.id}
-                                href={`/ro/${ro.ro_number}`}
-                                className="card flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                            >
-                                <div className="flex items-center gap-3">
-                                    <FileText className="text-blue-500 w-5 h-5" />
-                                    <span className="font-mono font-bold text-lg">{ro.ro_number}</span>
-                                </div>
-                                {ro.status === "finalized" ? (
-                                    <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold flex items-center gap-1">
-                                        <CheckCircle className="w-3 h-3" /> FINAL
-                                    </span>
-                                ) : (
-                                    <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-bold">
-                                        DRAFT
-                                    </span>
-                                )}
-                            </Link>
-                        ))}
+                    {isLoading ? (
+                        <div className="flex justify-center py-8">
+                            <Loader2 className="animate-spin text-blue-500" />
+                        </div>
+                    ) : (
+                        <div className="space-y-2">
+                            {displayROs.map((ro) => (
+                                <Link
+                                    key={ro.id}
+                                    href={`/ro/${ro.ro_number}`}
+                                    className="card flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <FileText className="text-blue-500 w-5 h-5" />
+                                        <span className="font-mono font-bold text-lg">{ro.ro_number}</span>
+                                    </div>
+                                    {ro.status === "finalized" ? (
+                                        <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold flex items-center gap-1">
+                                            <CheckCircle className="w-3 h-3" /> FINAL
+                                        </span>
+                                    ) : (
+                                        <span className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-bold">
+                                            DRAFT
+                                        </span>
+                                    )}
+                                </Link>
+                            ))}
 
-                        {!searchQuery && recentROs.length === 0 && (
-                            <p className="text-center text-gray-400 py-4">No recent ROs found.</p>
-                        )}
-
-                        {searchQuery && searchResults.length === 0 && (
-                            <p className="text-center text-gray-400 py-4">No results found.</p>
-                        )}
-                    </div>
+                            {displayROs.length === 0 && (
+                                <p className="text-center text-gray-400 py-4">
+                                    {searchQuery ? "No results found." : "No recent ROs found."}
+                                </p>
+                            )}
+                        </div>
+                    )}
                 </div>
             </section>
         </div>
