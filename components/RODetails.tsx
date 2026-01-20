@@ -87,7 +87,7 @@ export default function RODetails({ roNumber }: { roNumber: string }) {
 
         setError("");
         // Optimistic update could be done here, but DB is fast enough locally
-        const res = await scanPart(ro.id, barcode);
+        const res = await scanPart(ro.ro_number, barcode);
         if (res.success && res.data) {
             loadData(); // Reload to get updated order/qty
         } else if (res.error) {

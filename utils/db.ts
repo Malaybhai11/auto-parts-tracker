@@ -60,7 +60,7 @@ export async function createRO(roNumber: string): Promise<{ success: boolean; da
     try {
         const db = await openDB();
         const ro: RO = {
-            id: roNumber,
+            id: roNumber.toUpperCase(),
             ro_number: roNumber.toUpperCase(),
             status: "draft",
             created_at: new Date().toISOString(),
